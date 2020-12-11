@@ -11,8 +11,8 @@ source:
   sha256: 74a3ab34646054f674d236d1229ba8182dc2eae86feb249b8590ef496ce9803d
 
 build:
-  number: 0
-  skip: true   # [py2k]
+  number: 1
+  noarch: python
   entry_points:
     - protoc-gen-python_betterproto=betterproto.plugin:main
   script: {{ PYTHON }} -m pip install . -vv
@@ -20,10 +20,12 @@ build:
 requirements:
   host:
     - pip
-    - python
+    # backports-datetime-fromisoformat is the only blocker for a noarch version
+    # dataclasses provides a no-op noarch build for py>37
+    - python >=3.7
   run:
-    - backports-datetime-fromisoformat  # [py<37]
-    - dataclasses  # [py<37]
+    #- backports-datetime-fromisoformat  # [py<37]
+    - dataclasses
     - grpclib
     - python
     - stringcase
