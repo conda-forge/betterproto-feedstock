@@ -1,5 +1,5 @@
 {% set name = "betterproto" %}
-{% set version = "1.2.5" %}
+{% set version = "2.0.0b7" %}
 
 
 package:
@@ -8,10 +8,10 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/betterproto-{{ version }}.tar.gz
-  sha256: 74a3ab34646054f674d236d1229ba8182dc2eae86feb249b8590ef496ce9803d
+  sha256: 1b1458ca5278d519bcd62556a4c236f998a91d503f0f71c67b0b954747052af2
 
 build:
-  number: 1
+  number: 0
   noarch: python
   entry_points:
     - protoc-gen-python_betterproto=betterproto.plugin:main
@@ -20,15 +20,13 @@ build:
 requirements:
   host:
     - pip
-    # backports-datetime-fromisoformat is the only blocker for a noarch version
-    # dataclasses provides a no-op noarch build for py>37
     - python >=3.7
   run:
-    #- backports-datetime-fromisoformat  # [py<37]
-    - dataclasses
-    - grpclib
+    - grpclib >=0.4.1,<0.5.0
     - python
-    - stringcase
+    - python-dateutil >=2.8,<3.0
+    - typing-extensions >=4.7.1,<5.0.0
+    - importlib-metadata >=1.6.0  # [py<38]
 
 test:
   imports:
