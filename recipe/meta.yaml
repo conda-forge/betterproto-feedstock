@@ -7,11 +7,11 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/betterproto-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/betterproto-{{ version }}.tar.gz
   sha256: 74a3ab34646054f674d236d1229ba8182dc2eae86feb249b8590ef496ce9803d
 
 build:
-  number: 1
+  number: 2
   noarch: python
   entry_points:
     - protoc-gen-python_betterproto=betterproto.plugin:main
@@ -22,12 +22,12 @@ requirements:
     - pip
     # backports-datetime-fromisoformat is the only blocker for a noarch version
     # dataclasses provides a no-op noarch build for py>37
-    - python >=3.7
+    - python {{ python_min }}
   run:
     #- backports-datetime-fromisoformat  # [py<37]
     - dataclasses
     - grpclib
-    - python
+    - python >={{ python_min }}
     - stringcase
 
 test:
@@ -37,6 +37,7 @@ test:
     - pip check
   requires:
     - pip
+    - python {{ python_min }}
 
 about:
   home: http://github.com/danielgtaylor/python-betterproto
